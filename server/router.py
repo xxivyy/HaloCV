@@ -2,7 +2,7 @@ import logging
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from server import Protocol
+from .protocol import Protocol
 
 router = APIRouter(include_in_schema=False)
 logger = logging.getLogger("ws")
