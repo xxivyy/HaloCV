@@ -5,6 +5,10 @@ description = "A modular computer vision framework for efficient real-time objec
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "dxcam>=0.3.0",
     "fastapi>=0.141.1",
+    "opencv-python>=5.0.0.93",
+    "pyside6>=6.11.2",
     "uvicorn>=0.54.0",
+    "websockets>=17.1",
 ]
