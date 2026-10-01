@@ -5,15 +5,23 @@ description = "A modular computer vision framework for efficient real-time objec
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "dxcam>=0.3.0",
+    "numpy>=2.5.3",
+    "onnxruntime-gpu>=1.30.0",
+    "opencv-python>=5.0.0.93",
+    "torch>=2.14.1",
+]
+
+
+[project.optional-dependencies]
+server = [
     "fastapi>=0.141.1",
     "numpy>=2.5.3",
+    "uvicorn>=0.54.0",
+]
+desktop = [
+    "dxcam>=0.3.0",
     "opencv-python>=5.0.0.93",
     "pyside6>=6.11.2",
-    "torch>=2.14.0",
-    "torchvision>=0.29.0",
-    "ultralytics>=8.4.165",
-    "uvicorn>=0.54.0",
     "websockets>=17.1",
 ]
 
@@ -27,14 +35,11 @@ dev = [
 
 [tool.uv.sources]
 torch = [
-    { index = "torch-gpu" },
-]
-torchvision = [
-    { index = "torch-gpu" },
+    { index = "torch-cu132" },
 ]
 
 
 [[tool.uv.index]]
-name = "torch-gpu"
+name = "torch-cu132"
 url = "https://download.pytorch.org/whl/cu132"
 explicit = true
