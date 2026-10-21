@@ -13,13 +13,13 @@ dependencies = [
 
 
 [project.optional-dependencies]
-server = [
-    "fastapi>=0.141.1",
-    "uvicorn>=0.54.0",
-]
 desktop = [
     "dxcam>=0.3.0",
     "pyside6>=6.11.2",
+]
+server = [
+    "fastapi>=0.141.1",
+    "uvicorn>=0.54.0",
 ]
 yolo = [
     "onnx>=1.23.2",
