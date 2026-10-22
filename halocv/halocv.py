@@ -10,9 +10,11 @@ import torch  # noqa: F401 ; for CUDA DLLs
 
 
 class Detection(TypedDict):
-    cls: str  # class name
-    score: int  # 0-100%
-    box: tuple[int, int, int, int]  # (x, y, w, h)
+    """A single detected object."""
+
+    cls: str  # class label.
+    score: int  # 0-100 confidence score.
+    box: tuple[int, int, int, int]  # (x, y, width, height)
 
 
 class HaloCV:
