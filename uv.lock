@@ -535,7 +535,7 @@ requires-dist = [
     { name = "ultralytics", marker = "extra == 'yolo'", specifier = ">=8.4.174" },
     { name = "uvicorn", marker = "extra == 'server'", specifier = ">=0.54.0" },
 ]
-provides-extras = ["server", "desktop", "yolo"]
+provides-extras = ["desktop", "server", "yolo"]
 
 [package.metadata.requires-dev]
 dev = [
