@@ -84,7 +84,6 @@ class HaloCV:
     def _preprocess(
         self,
         frame: np.ndarray,
-        auto_resize: bool,
         box_resolution: tuple[int, int] | None,
     ) -> tuple[int, int, int, int, float, float]:
 
@@ -101,11 +100,6 @@ class HaloCV:
             )
 
         if h > self.resolution_h or w > self.resolution_w:
-            if not auto_resize:
-                raise ValueError(
-                    f"frame resolution mismatch, expected (h: {self.resolution_h}, w: {self.resolution_w}), received (h: {h}, w: {w}).",
-                )
-
             downscale = min(self.resolution_h / h, self.resolution_w / w, 1.0)
 
             w = max(1, round(w * downscale))
@@ -285,7 +279,6 @@ class HaloCV:
         frame: np.ndarray,
         conf: float,
         iou: float,
-        auto_resize: bool = False,
         box_resolution: tuple[int, int] | None = None,
     ) -> list[Detection]:
 
@@ -296,7 +289,7 @@ class HaloCV:
             pad_bottom,
             scale_x,
             scale_y,
-        ) = self._preprocess(frame, auto_resize, box_resolution)
+        ) = self._preprocess(frame, box_resolution)
 
         output = self.session.run(
             None,
