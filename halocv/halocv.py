@@ -24,11 +24,8 @@ class HaloCV:
     def __init__(
         self,
         model: str | Path,
-        auto_resize: bool = False,
         log_meta: bool = False,
     ) -> None:
-
-        self.auto_resize = auto_resize
 
         model = Path(model).resolve()
 
@@ -87,7 +84,8 @@ class HaloCV:
     def _preprocess(
         self,
         frame: np.ndarray,
-        result_resolution: tuple[int, int] | None,
+        auto_resize: bool,
+        box_resolution: tuple[int, int] | None,
     ) -> tuple[int, int, int, int, float, float]:
 
         h, w, c = frame.shape[:3]  # height, width, channels
@@ -103,7 +101,7 @@ class HaloCV:
             )
 
         if h > self.resolution_h or w > self.resolution_w:
-            if not self.auto_resize:
+            if not auto_resize:
                 raise ValueError(
                     f"frame resolution mismatch, expected (h: {self.resolution_h}, w: {self.resolution_w}), received (h: {h}, w: {w}).",
                 )
@@ -156,8 +154,8 @@ class HaloCV:
             out=self.buffer_nchw,
         )
 
-        if result_resolution is not None:
-            target_w, target_h = result_resolution
+        if box_resolution is not None:
+            target_w, target_h = box_resolution
             scale_x = w / target_w
             scale_y = h / target_h
         else:
@@ -287,7 +285,8 @@ class HaloCV:
         frame: np.ndarray,
         conf: float,
         iou: float,
-        result_resolution: tuple[int, int] | None = None,
+        auto_resize: bool = False,
+        box_resolution: tuple[int, int] | None = None,
     ) -> list[Detection]:
 
         (
@@ -297,7 +296,7 @@ class HaloCV:
             pad_bottom,
             scale_x,
             scale_y,
-        ) = self._preprocess(frame, result_resolution)
+        ) = self._preprocess(frame, auto_resize, box_resolution)
 
         output = self.session.run(
             None,
