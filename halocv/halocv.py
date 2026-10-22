@@ -85,7 +85,7 @@ class HaloCV:
             )
             print(meta_str)
 
-    def preprocess(self, frame: np.ndarray):
+    def _preprocess(self, frame: np.ndarray) -> tuple[int, int, int, int]:
 
         h, w, c = frame.shape[:3]  # height, width, channels
 
@@ -155,7 +155,7 @@ class HaloCV:
 
         return left, right, top, bottom
 
-    def postprocess(
+    def _postprocess(
         self,
         output: np.ndarray,
         pad_left: int,
@@ -280,14 +280,14 @@ class HaloCV:
             pad_right,
             pad_top,
             pad_bottom,
-        ) = self.preprocess(frame)
+        ) = self._preprocess(frame)
 
         output = self.session.run(
             None,
             {self.input_name: self.buffer_nchw},
         )[0]
 
-        result = self.postprocess(
+        result = self._postprocess(
             output,  # ty: ignore[invalid-argument-type]
             pad_left,
             pad_right,
