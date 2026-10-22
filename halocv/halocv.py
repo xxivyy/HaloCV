@@ -267,11 +267,16 @@ class HaloCV:
         for i in np.asarray(indices).reshape(-1):
             x, y, w, h = boxes_xywh[i]
 
+            x1 = round(float(x) / scale_x)
+            y1 = round(float(y) / scale_y)
+            x2 = round(float(x + w) / scale_x)
+            y2 = round(float(y + h) / scale_y)
+
             detections.append(
                 {
                     "cls": self.classes[int(class_ids[i])],
                     "score": round(float(class_scores[i]) * 100),
-                    "box": (int(x), int(y), int(w), int(h)),
+                    "box": (x1, y1, x2 - x1, y2 - y1),
                 }
             )
 
