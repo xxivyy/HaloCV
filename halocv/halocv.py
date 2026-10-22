@@ -46,10 +46,10 @@ class HaloCV:
 
         self.input_name = self.session.get_inputs()[0].name
 
-        meta = self.session.get_modelmeta().custom_metadata_map
+        meta: dict = self.session.get_modelmeta().custom_metadata_map
 
         try:
-            model_date = meta["date"]
+            model_date = meta.get("date", "unknown")
 
             model_author = meta["author"]
             if model_author != "Ultralytics":
@@ -248,13 +248,11 @@ class HaloCV:
         if len(indices) == 0:
             return []
 
-        # ? indices = np.array(indices).flatten()
-
         ## -- 4: Summarize final detections -- ##
 
         detections: list[Detection] = []
 
-        for i in indices:
+        for i in np.asarray(indices).reshape(-1):
             x, y, w, h = boxes_xywh[i]
 
             detections.append(
@@ -295,6 +293,7 @@ class HaloCV:
             pad_bottom,
             conf,
             iou,
+            target_resolution,
         )
 
         return result
