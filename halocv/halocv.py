@@ -10,8 +10,8 @@ import torch  # noqa: F401 ; for CUDA DLLs
 
 
 class Detection(TypedDict):
-    cls: str
-    score: int
+    cls: str  # class name
+    score: int  # 0-100%
     box: tuple[int, int, int, int]  # (x, y, w, h)
 
 
@@ -105,7 +105,7 @@ class HaloCV:
                     f"frame resolution mismatch, expected (h: {self.resolution_h}, w: {self.resolution_w}), received (h: {h}, w: {w}).",
                 )
 
-            scale = min(max(self.resolution_h, self.resolution_w) / max(w, h), 1.0)
+            scale = min(self.resolution_h / h, self.resolution_w / w, 1.0)
 
             w = max(1, round(w * scale))
             h = max(1, round(h * scale))
