@@ -18,7 +18,6 @@ class Detection(TypedDict):
 class HaloCV:
     # TODO: could be offloaded to threads, if concurrency matters.
     # TODO: could add a model download helper.
-    # TODO: implement target resolution.
 
     normalizer = np.float32(1.0 / 255.0)
 
@@ -85,7 +84,11 @@ class HaloCV:
             )
             print(meta_str)
 
-    def _preprocess(self, frame: np.ndarray) -> tuple[int, int, int, int]:
+    def _preprocess(
+        self,
+        frame: np.ndarray,
+        result_resolution: tuple[int, int] | None,
+    ) -> tuple[int, int, int, int, float, float]:
 
         h, w, c = frame.shape[:3]  # height, width, channels
 
@@ -105,10 +108,10 @@ class HaloCV:
                     f"frame resolution mismatch, expected (h: {self.resolution_h}, w: {self.resolution_w}), received (h: {h}, w: {w}).",
                 )
 
-            scale = min(self.resolution_h / h, self.resolution_w / w, 1.0)
+            downscale = min(self.resolution_h / h, self.resolution_w / w, 1.0)
 
-            w = max(1, round(w * scale))
-            h = max(1, round(h * scale))
+            w = max(1, round(w * downscale))
+            h = max(1, round(h * downscale))
 
             frame = cv2.resize(
                 frame,
@@ -153,7 +156,14 @@ class HaloCV:
             out=self.buffer_nchw,
         )
 
-        return left, right, top, bottom
+        if result_resolution is not None:
+            target_w, target_h = result_resolution
+            scale_x = w / target_w
+            scale_y = h / target_h
+        else:
+            scale_x = scale_y = 1.0
+
+        return left, right, top, bottom, scale_x, scale_y
 
     def _postprocess(
         self,
@@ -162,6 +172,8 @@ class HaloCV:
         pad_right: int,
         pad_top: int,
         pad_bottom: int,
+        scale_x: float,
+        scale_y: float,
         conf: float,
         iou: float,
     ) -> list[Detection]:
@@ -270,7 +282,7 @@ class HaloCV:
         frame: np.ndarray,
         conf: float,
         iou: float,
-        target_resolution: tuple[int, int] | None = None,
+        result_resolution: tuple[int, int] | None = None,
     ) -> list[Detection]:
 
         (
@@ -278,7 +290,9 @@ class HaloCV:
             pad_right,
             pad_top,
             pad_bottom,
-        ) = self._preprocess(frame)
+            scale_x,
+            scale_y,
+        ) = self._preprocess(frame, result_resolution)
 
         output = self.session.run(
             None,
@@ -291,9 +305,10 @@ class HaloCV:
             pad_right,
             pad_top,
             pad_bottom,
+            scale_x,
+            scale_y,
             conf,
             iou,
-            target_resolution,
         )
 
         return result
