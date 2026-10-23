@@ -1,3 +1,3 @@
 title "HaloCV Setup"
-uv sync --extra server --extra desktop
+uv sync --group desktop
 pause
