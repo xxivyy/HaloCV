@@ -329,6 +329,29 @@ class HaloCV:
         iou: float,
         box_resolution: tuple[int, int] | None = None,
     ) -> list[Detection]:
+        """
+        Detect objects in the given frame.
+
+        Args:
+            frame: Input `RGB` `uint8` image with shape `(height, width, 3)`.
+                Frames larger than the model input are downscaled internally.
+                Make sure to convert to `RGB` first if necessary, for example when using a `cv2.imread` (`BGR`).
+            conf: `0-1` Confidence threshold.
+            iou: `0-1` Intersection over Union (IoU) threshold for NMS.
+            box_resolution: The `(width, height)` to which the returned boxes should be scaled to.
+                For example if you resized the passed `frame`, but need the coordinates for the original image.
+                If `None`, the box coordinates are based on the originally passed `frame`'s resolution.
+
+        Returns:
+            `list[dict]`: List of detected objects, with the following keys:
+            `"cls": str` class label of the detected object.
+            `"score": int` 0-100 confidence score.
+            `"box": tuple[int, int, int, int]` bounding box coordinates `(x, y, width, height)`.
+
+        Raises:
+            ValueError: If `frame` has an unexpected shape or type.
+            ValueError: If `box_resolution` is provided but has non-positive dimensions.
+        """
 
         (
             pad_left,
