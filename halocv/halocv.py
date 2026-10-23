@@ -107,13 +107,16 @@ class HaloCV:
         box_resolution: tuple[int, int] | None,
     ) -> tuple[int, int, int, int, float, float]:
 
-        h, w, c = frame.shape[:3]  # height, width, channels
+        ## -- 1: Validation -- ##
 
-        original_h, original_w = h, w
-
-        if c != 3:
+        if frame.ndim != 3:
             raise ValueError(
-                f"frame channel mismatch, expected 3, received {c}.",
+                f"frame dimension mismatch, expected 3, received {frame.ndim}."
+            )
+
+        if frame.shape[2] != 3:  # color channels
+            raise ValueError(
+                f"frame channel mismatch, expected 3, received {frame.shape[2]}."
             )
 
         if frame.dtype != np.uint8:
@@ -121,19 +124,26 @@ class HaloCV:
                 f"frame dtype mismatch, expected np.uint8, received {frame.dtype}.",
             )
 
-        if h > self.input_height or w > self.input_width:
-            downscale = min(self.input_height / h, self.input_width / w, 1.0)
+        ## -- 2: Resizing -- ##
 
-            w = max(1, round(w * downscale))
-            h = max(1, round(h * downscale))
+        frame_h, frame_w = frame.shape[:2]
+
+        if frame_h > self.input_height or frame_w > self.input_width:
+            scale = min(self.input_height / frame_h, self.input_width / frame_w, 1.0)
+
+            w = max(1, round(frame_w * scale))
+            h = max(1, round(frame_h * scale))
 
             frame = cv2.resize(
-                frame,
-                (w, h),
+                src=frame,
+                dsize=(w, h),
                 interpolation=cv2.INTER_AREA,
             )
 
-        ## -- 1: Letterboxing -- ##
+        else:
+            h, w = frame_h, frame_w
+
+        ## -- 3: Letterboxing -- ##
 
         pad_h = self.input_height - h
         pad_w = self.input_width - w
@@ -162,7 +172,7 @@ class HaloCV:
             left = right = top = bottom = 0
             buffer_hwc = frame
 
-        ## -- 2: Normalization -- ##
+        ## -- 4: Normalization -- ##
 
         np.multiply(
             buffer_hwc.transpose(2, 0, 1)[None, ...],
@@ -170,13 +180,22 @@ class HaloCV:
             out=self.buffer_nchw,
         )
 
+        ## -- 5: Scaling -- ##
+
         if box_resolution is not None:
             target_w, target_h = box_resolution
+
+            if target_w <= 0 or target_h <= 0:
+                raise ValueError(
+                    f"Invalid box_resolution: {box_resolution}. Both values must be positive.",
+                )
+
             scale_x = w / target_w
             scale_y = h / target_h
-        else:
-            scale_x = w / original_w
-            scale_y = h / original_h
+
+        else:  # scale to original frames resolution.
+            scale_x = w / frame_w
+            scale_y = h / frame_h
 
         return left, right, top, bottom, scale_x, scale_y
 
