@@ -36,8 +36,7 @@ class HaloCV:
         RuntimeError: If the model metadata is missing or unsupported.
     """
 
-    # TODO: could be offloaded to threads, if concurrency matters.
-    # TODO: could add a model download helper.
+    # TODO: could implement a threadpool, if concurrency matters.
 
     normalizer = np.float32(1.0 / 255.0)
 
