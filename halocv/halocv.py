@@ -124,12 +124,25 @@ class HaloCV:
                 f"frame dtype mismatch, expected np.uint8, received {frame.dtype}.",
             )
 
-        ## -- 2: Resizing -- ##
-
         frame_h, frame_w = frame.shape[:2]
 
+        if frame_h == 0 or frame_w == 0:
+            raise ValueError(
+                f"Invalid frame shape: (h: {frame_h}, w: {frame_w}). Both dimensions must be positive."
+            )
+
+        if box_resolution is not None:
+            target_w, target_h = box_resolution
+
+            if target_w <= 0 or target_h <= 0:
+                raise ValueError(
+                    f"Invalid box_resolution: {box_resolution}. Both values must be positive.",
+                )
+
+        ## -- 2: Resizing -- ##
+
         if frame_h > self.input_height or frame_w > self.input_width:
-            scale = min(self.input_height / frame_h, self.input_width / frame_w, 1.0)
+            scale = min(1.0, self.input_height / frame_h, self.input_width / frame_w)
 
             w = max(1, round(frame_w * scale))
             h = max(1, round(frame_h * scale))
@@ -183,13 +196,6 @@ class HaloCV:
         ## -- 5: Scaling -- ##
 
         if box_resolution is not None:
-            target_w, target_h = box_resolution
-
-            if target_w <= 0 or target_h <= 0:
-                raise ValueError(
-                    f"Invalid box_resolution: {box_resolution}. Both values must be positive.",
-                )
-
             scale_x = w / target_w
             scale_y = h / target_h
 
