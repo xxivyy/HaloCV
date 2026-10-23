@@ -91,6 +91,8 @@ class HaloCV:
 
         h, w, c = frame.shape[:3]  # height, width, channels
 
+        original_h, original_w = h, w
+
         if c != 3:
             raise ValueError(
                 f"frame channel mismatch, expected 3, received {c}.",
@@ -155,7 +157,8 @@ class HaloCV:
             scale_x = w / target_w
             scale_y = h / target_h
         else:
-            scale_x = scale_y = 1.0
+            scale_x = w / original_w
+            scale_y = h / original_h
 
         return left, right, top, bottom, scale_x, scale_y
 
