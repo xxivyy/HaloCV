@@ -64,9 +64,9 @@ class HaloCV:
 
         meta: dict = self.session.get_modelmeta().custom_metadata_map
 
-        try:
-            model_date = meta.get("date", "unknown")
+        model_date = meta.get("date", "unknown")
 
+        try:
             model_author = meta["author"]
             if model_author != "Ultralytics":
                 raise RuntimeError(f"Unsupported author: {model_author}")
@@ -76,6 +76,7 @@ class HaloCV:
                 raise RuntimeError(f"Unsupported task: {model_task}")
 
             model_imgsz: list = ast.literal_eval(meta["imgsz"])
+
             self.input_height, self.input_width = model_imgsz
 
             self.classes: dict = ast.literal_eval(meta["names"])
