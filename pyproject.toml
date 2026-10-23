@@ -12,7 +12,11 @@ dependencies = [
 ]
 
 
-[project.optional-dependencies]
+[dependency-groups]
+dev = [
+    "ruff>=0.16.9",
+    "ty>=0.0.84",
+]
 desktop = [
     "dxcam>=0.3.0",
     "pyside6>=6.11.2",
@@ -25,13 +29,6 @@ yolo = [
     "onnx>=1.23.2",
     "torchvision>=0.29.1",
     "ultralytics>=8.4.174",
-]
-
-
-[dependency-groups]
-dev = [
-    "ruff>=0.16.9",
-    "ty>=0.0.84",
 ]
 
 
