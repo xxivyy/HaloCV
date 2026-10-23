@@ -58,7 +58,7 @@ class HaloCV:
                 raise RuntimeError(f"Unsupported task: {model_task}")
 
             model_imgsz: list = ast.literal_eval(meta["imgsz"])
-            self.resolution_h, self.resolution_w = model_imgsz
+            self.input_height, self.input_width = model_imgsz
 
             self.classes: dict = ast.literal_eval(meta["names"])
 
@@ -66,18 +66,18 @@ class HaloCV:
             raise RuntimeError(f"Could not read model metadata: {e}")
 
         self.buffer_hwc = np.empty(
-            (self.resolution_h, self.resolution_w, 3), dtype=np.uint8
+            (self.input_height, self.input_width, 3), dtype=np.uint8
         )  # buffer for letterboxing.
 
         self.buffer_nchw = np.empty(
-            (1, 3, self.resolution_h, self.resolution_w), dtype=np.float32
+            (1, 3, self.input_height, self.input_width), dtype=np.float32
         )  # buffer for normalized model input.
 
         if log_meta:
             meta_str = (
                 f"Loaded {model}\n"
                 f"Model Date: {model_date}\n"
-                f"Model Resolution: (h: {self.resolution_h}, w: {self.resolution_w})\n"
+                f"Model Resolution: (h: {self.input_height}, w: {self.input_width})\n"
                 f"Model Classes:\n"
                 f"{json.dumps(self.classes, indent=2)}"
             )
@@ -101,8 +101,8 @@ class HaloCV:
                 f"frame dtype mismatch, expected np.uint8, received {frame.dtype}.",
             )
 
-        if h > self.resolution_h or w > self.resolution_w:
-            downscale = min(self.resolution_h / h, self.resolution_w / w, 1.0)
+        if h > self.input_height or w > self.input_width:
+            downscale = min(self.input_height / h, self.input_width / w, 1.0)
 
             w = max(1, round(w * downscale))
             h = max(1, round(h * downscale))
@@ -115,8 +115,8 @@ class HaloCV:
 
         ## -- 1: Letterboxing -- ##
 
-        pad_h = self.resolution_h - h
-        pad_w = self.resolution_w - w
+        pad_h = self.input_height - h
+        pad_w = self.input_width - w
 
         if pad_h > 0 or pad_w > 0:
             left = pad_w // 2
@@ -214,8 +214,8 @@ class HaloCV:
         boxes_xyxy[:, [0, 2]] -= pad_left
         boxes_xyxy[:, [1, 3]] -= pad_top
 
-        original_w = self.resolution_w - pad_left - pad_right
-        original_h = self.resolution_h - pad_top - pad_bottom
+        original_w = self.input_width - pad_left - pad_right
+        original_h = self.input_height - pad_top - pad_bottom
 
         # clip to original image bounds
 
