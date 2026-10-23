@@ -1,1 +1,40 @@
-Currently in early development.
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3.12+-brightgreen)
+![License](https://img.shields.io/badge/License-AGPLv3-blue)
+
+### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [License](#license)
+
+</div>
+
+## Quickstart
+
+```python
+import cv2
+
+from halocv import HaloCV
+
+model = HaloCV("path/to/model.onnx")
+
+image = cv2.imread("path/to/image.png")
+
+if image is not None:
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    detections = model.detect(image, conf=0.55, iou=0.45)
+
+    for d in detections:
+        print(d)
+```
+
+## About
+
+...
+
+## Usage
+
+...
+
+## License
+
+This project is licensed under the GNU Affero General Public License v3.0. See [LICENSE](LICENSE).
