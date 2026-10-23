@@ -18,6 +18,24 @@ class Detection(TypedDict):
 
 
 class HaloCV:
+    """
+    Object detector for Ultralytics YOLO `.onnx` models.
+
+    Args:
+        model: path to `.onnx` model.
+        log_meta: whether to print model metadata during initialization.
+
+    Attributes:
+        input_height: model input height.
+        input_width: model input width.
+        classes: dictionary mapping class IDs to class names.
+
+    Raises:
+        FileNotFoundError: If the model file does not exist.
+        ValueError: If the model file is not a `.onnx` file.
+        RuntimeError: If the model metadata is missing or unsupported.
+    """
+
     # TODO: could be offloaded to threads, if concurrency matters.
     # TODO: could add a model download helper.
 
