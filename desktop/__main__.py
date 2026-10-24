@@ -7,15 +7,13 @@ def main() -> None:
 
     app = QApplication(sys.argv)
 
-    from .overlay import Overlay
+    from .tool_window import ToolWindow
 
-    overlay = Overlay()
+    toolWindow = ToolWindow()
+    toolWindow.show()
 
-    from .screen import Screen
-
-    Screen.capture(overlay)
-
-    sys.exit(app.exec())
+    exit_code = app.exec()
+    sys.exit(exit_code)
 
 
 if __name__ == "__main__":
