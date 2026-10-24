@@ -85,7 +85,7 @@ class Overlay(QWidget):
             if self.draw_mode == DrawMode.BOXES:
                 for d in self.detections:
                     painter.drawRect(*d["box"])
-                    return
+                return
 
             h, w = self.frame.shape[:2]
 
