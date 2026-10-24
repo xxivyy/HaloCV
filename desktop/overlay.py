@@ -10,7 +10,7 @@ from .winapi import WinAPI
 
 
 class DrawMode(Enum):
-    BOX = auto()
+    BOXES = auto()
     BLUR = auto()
     PIXELATE = auto()
 
@@ -49,6 +49,13 @@ class Overlay(QWidget):
 
         self.pixelate_block_size = 25
 
+    def set_draw_mode(self, mode: DrawMode) -> None:
+        if mode == self.draw_mode:
+            return
+
+        self.draw_mode = mode
+        self.update(self.draw_region)
+
     def _get_draw_region(self, detections: list[dict]) -> QRegion:
         region = QRegion()
 
@@ -75,7 +82,7 @@ class Overlay(QWidget):
         try:
             painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-            if self.draw_mode == DrawMode.BOX:
+            if self.draw_mode == DrawMode.BOXES:
                 for d in self.detections:
                     painter.drawRect(*d["box"])
                     return
