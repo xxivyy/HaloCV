@@ -1,11 +1,11 @@
 <div align="center">
 
-<img alt="Python" src="https://img.shields.io/badge/Python-3.12+-brightgreen">
-<img alt="Inference" src="https://img.shields.io/badge/Inference-ONNX_Runtime-orange">
-<img alt="Models" src="https://img.shields.io/badge/Models-Ultralytics_YOLO-blue">
-<img alt="GUI" src="https://img.shields.io/badge/GUI-PySide6-magenta">
-<img alt="Capture" src="https://img.shields.io/badge/Capture-DxCam-magenta">
-<img alt="License" src="https://img.shields.io/badge/License-AGPLv3-yellow">
+<img alt="Python" src="https://img.shields.io/badge/Python-3.12+-brightgreen" style="pointer-events: none;">
+<img alt="Inference" src="https://img.shields.io/badge/Inference-ONNX_Runtime-orange" style="pointer-events: none;">
+<img alt="Models" src="https://img.shields.io/badge/Models-Ultralytics_YOLO-blue" style="pointer-events: none;">
+<img alt="GUI" src="https://img.shields.io/badge/GUI-PySide6-magenta" style="pointer-events: none;">
+<img alt="Capture" src="https://img.shields.io/badge/Capture-DxCam-magenta" style="pointer-events: none;">
+<img alt="License" src="https://img.shields.io/badge/License-AGPLv3-yellow" style="pointer-events: none;">
 
 ### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [License](#license)
 
