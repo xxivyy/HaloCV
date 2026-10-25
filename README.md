@@ -1,11 +1,11 @@
 <div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.12+-brightgreen)]()
-[![Inference](https://img.shields.io/badge/Inference-ONNX_Runtime-orange)]()
-[![Models](https://img.shields.io/badge/Models-Ultralytics_YOLO-blue)]()
-[![GUI](https://img.shields.io/badge/GUI-PySide6-magenta)]()
-[![Capture](https://img.shields.io/badge/Capture-DxCam-magenta)]()
-[![License](https://img.shields.io/badge/License-AGPLv3-yellow)]()
+<img alt="Python" src="https://img.shields.io/badge/Python-3.12+-brightgreen">
+<img alt="Inference" src="https://img.shields.io/badge/Inference-ONNX_Runtime-orange">
+<img alt="Models" src="https://img.shields.io/badge/Models-Ultralytics_YOLO-blue">
+<img alt="GUI" src="https://img.shields.io/badge/GUI-PySide6-magenta">
+<img alt="Capture" src="https://img.shields.io/badge/Capture-DxCam-magenta">
+<img alt="License" src="https://img.shields.io/badge/License-AGPLv3-yellow">
 
 ### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [License](#license)
 
