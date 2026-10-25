@@ -1,7 +1,11 @@
 <div align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.12+-brightgreen)
-![License](https://img.shields.io/badge/License-AGPLv3-blue)
+![Inference](https://img.shields.io/badge/Inference-ONNX_Runtime-orange)
+![Models](https://img.shields.io/badge/Models-Ultralytics_YOLO-blue)
+![GUI](https://img.shields.io/badge/GUI-PySide6-magenta)
+![Capture](https://img.shields.io/badge/Capture-DxCam-magenta)
+![License](https://img.shields.io/badge/License-AGPLv3-yellow)
 
 ### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [License](#license)
 
