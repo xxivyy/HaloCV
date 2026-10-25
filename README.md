@@ -7,7 +7,7 @@
 [![Capture](https://img.shields.io/badge/Capture-DxCam-magenta)](https://github.com/ra1nty/DXcam)
 [![License](https://img.shields.io/badge/License-AGPLv3-yellow)](https://github.com/xxivyy/HaloCV/blob/main/LICENSE)
 
-### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [Roadmap](#roadmap) • [License](#license)
+### [About](#about) • [Requirements](#requirements) • [Desktop Tool](#desktop-tool) • [Python Module](#python-module) • [Roadmap](#roadmap) • [License](#license)
 
 ### HaloCV
 
@@ -17,7 +17,24 @@
 
 </div>
 
-## Quickstart
+## About
+
+...
+
+## Requirements
+
+...
+
+## Desktop Tool
+
+...
+
+## Python Module
+
+### Quickstart
+
+Bring a compatible Ultralytics detection model in ONNX format.
+The model must include the Ultralytics metadata, HaloCV reads `author`, `task`, `imgsz`, and `names`.
 
 ```python
 import cv2
@@ -31,17 +48,67 @@ image = cv2.imread("path/to/image.png")
 if image is not None:
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    detections = model.detect(image, conf=0.55, iou=0.45)
+    detections = model.detect(frame=image, conf=0.55, iou=0.45)
 
     for d in detections:
         print(d)
 ```
 
-## About
+If the image is already loaded as `RGB`, you can skip `cv2.cvtColor`. For example when using `Pillow`.
 
-...
+Each detection will have this shape:
 
-## Usage
+```python
+{
+    "cls": "class_label",
+    "score": 75,  # confidence percentage, 0-100
+    "box": (x, y, width, height),  # pixel coordinates
+}
+```
+
+### Optimizing
+
+Images larger than the model input are downscaled internally. By default, returned boxes will be based on the resolution of the `frame` passed to `detect`. 
+
+If your image resolution stays constant, you can avoid the temporary buffer allocation on each call by resizing on your own and passing `box_resolution` with the original `(width, height)`, which will make the returned boxes be based on that resolution instead.
+
+Using a scale is important because HaloCV uses letterboxing to preserve the images aspect ratio.
+
+Example:
+
+```python
+original_h, original_w = image.shape[:2]
+
+scale = min(
+    1.0,
+    model.input_height / original_h,
+    model.input_width / original_w,
+)
+
+input_h = max(1, round(original_h * scale))
+input_w = max(1, round(original_w * scale))
+
+buffer = np.empty(
+    (input_h, input_w, 3),
+    dtype=np.uint8,
+)
+
+cv2.resize(
+    src=image,
+    dsize=(input_w, input_h),
+    dst=buffer,
+    interpolation=cv2.INTER_AREA,
+)
+
+detections = model.detect(
+    frame=buffer,
+    conf=0.55,
+    iou=0.45,
+    box_resolution=(input_w, input_h),
+)
+```
+
+## Roadmap
 
 ...
 
