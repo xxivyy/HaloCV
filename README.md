@@ -5,7 +5,7 @@
 [![Models](https://img.shields.io/badge/Models-Ultralytics_YOLO-blue)](https://github.com/ultralytics/ultralytics)
 [![GUI](https://img.shields.io/badge/GUI-PySide6-magenta)](https://pypi.org/project/PySide6/)
 [![Capture](https://img.shields.io/badge/Capture-DxCam-magenta)](https://github.com/ra1nty/DXcam)
-[![License](https://img.shields.io/badge/License-AGPLv3-yellow)](#license)
+[![License](https://img.shields.io/badge/License-AGPLv3-yellow)]([#license](https://github.com/xxivyy/HaloCV/blob/main/LICENSE))
 
 ### [Quickstart](#quickstart) • [About](#about) • [Usage](#usage) • [License](#license)
 
