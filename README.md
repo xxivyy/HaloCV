@@ -139,7 +139,7 @@ detections = model.detect(
 - Add auto reload to the model directory.
 - Add settings for box color & thickness.
 - Add settings for pixelation & blur strength.
-- Add linux support. (?)
+- Add linux support by using `MSS` for screen capturing.
 
 ## License
 
