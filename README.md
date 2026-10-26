@@ -23,7 +23,24 @@
 
 ## Requirements
 
-...
+HaloCV requires [`uv`](https://docs.astral.sh/uv/) and runs on Python 3.12 or later.
+
+You need a compatible Ultralytics detection model exported to ONNX format.
+The model must include the Ultralytics metadata, HaloCV reads `author`, `task`, `imgsz`, and `names`.
+
+The default dependencies include a GPU enabled ONNX Runtime and PyTorch. The ONNX Runtime session is configured to use CUDA when available and fall back to CPU. GPU execution requires a compatible NVIDIA driver.
+
+From the repository root, sync the environment:
+
+```powershell
+uv sync
+```
+
+To use the desktop tool, also add the `desktop` group or run `!desktop_setup.bat`:
+
+```powershell
+uv sync --group desktop
+```
 
 ## Desktop Tool
 
@@ -32,9 +49,6 @@
 ## Python Module
 
 ### Quickstart
-
-Bring a compatible Ultralytics detection model in ONNX format.
-The model must include the Ultralytics metadata, HaloCV reads `author`, `task`, `imgsz`, and `names`.
 
 ```python
 import cv2
