@@ -124,7 +124,22 @@ detections = model.detect(
 
 ## Roadmap
 
-...
+#### Features which could be added in the future:
+
+### HaloCV
+
+- Release to PyPI.
+- Add threadsafety or internal threading.
+- Add box smoothing & tracking.
+
+### Desktop Tool
+
+- Add available classes and allow disabling them individually.
+- Add class label and score to boxes.
+- Add auto reload to the model directory.
+- Add settings for box color & thickness.
+- Add settings for pixelation & blur strength.
+- Add linux support. (?)
 
 ## License
 
