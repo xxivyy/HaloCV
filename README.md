@@ -32,13 +32,13 @@ The default dependencies include a GPU enabled ONNX Runtime and PyTorch. The ONN
 
 From the repository root, sync the environment:
 
-```powershell
+```cmd
 uv sync
 ```
 
 To use the desktop tool, also add the `desktop` group or run `!desktop_setup.bat`:
 
-```powershell
+```cmd
 uv sync --group desktop
 ```
 
