@@ -13,7 +13,7 @@ class Detection(TypedDict):
     """A single detected object."""
 
     cls: str  # class label.
-    score: int  # 0-100 confidence score.
+    score: float  # 0-1 confidence score.
     box: tuple[int, int, int, int]  # (x, y, width, height)
 
 
@@ -315,7 +315,7 @@ class HaloCV:
             detections.append(
                 {
                     "cls": self.classes[int(class_ids[i])],
-                    "score": round(float(class_scores[i]) * 100),
+                    "score": float(class_scores[i]),
                     "box": (x1, y1, x2 - x1, y2 - y1),
                 }
             )
@@ -345,7 +345,7 @@ class HaloCV:
         Returns:
             `list[dict]`: List of detected objects, with the following keys:
             `"cls": str` class label of the detected object.
-            `"score": int` 0-100 confidence score.
+            `"score": float` 0-1 confidence score.
             `"box": tuple[int, int, int, int]` bounding box coordinates `(x, y, width, height)`.
 
         Raises:

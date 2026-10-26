@@ -61,8 +61,8 @@ Each detection will have this shape:
 ```python
 {
     "cls": "class_label",
-    "score": 75,  # confidence percentage, 0-100
-    "box": (x, y, width, height),  # pixel coordinates
+    "score": 0.75,  # confidence float, 0-1.
+    "box": (x, y, width, height),  # pixel coordinates.
 }
 ```
 
