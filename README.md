@@ -52,8 +52,7 @@ You can launch the Desktop Tool with `!desktop.bat`, or run:
 uv run -m desktop
 ```
 
-### Multiple Monitors
-
+If you have multiple monitors, the screen capture and overlay drawing will be on the primary monitor.
 
 ## Python Module
 
