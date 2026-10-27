@@ -25,10 +25,10 @@
 
 HaloCV requires [`uv`](https://docs.astral.sh/uv/) and runs on Python 3.12 or later.
 
+The default dependencies include a GPU enabled ONNX Runtime and PyTorch. The ONNX Runtime session is configured to use CUDA when available and fall back to CPU. GPU execution requires a compatible NVIDIA driver.
+
 You need a compatible Ultralytics detection model exported to ONNX format.
 The model must include the Ultralytics metadata, HaloCV reads `author`, `task`, `imgsz`, and `names`.
-
-The default dependencies include a GPU enabled ONNX Runtime and PyTorch. The ONNX Runtime session is configured to use CUDA when available and fall back to CPU. GPU execution requires a compatible NVIDIA driver.
 
 ## Desktop Tool
 
