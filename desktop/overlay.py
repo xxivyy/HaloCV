@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 from PySide6.QtCore import QRect, Qt, Signal
 from PySide6.QtGui import QColor, QImage, QPainter, QPaintEvent, QPalette, QRegion
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QApplication, QWidget
 
 from .winapi import WinAPI
 
@@ -38,7 +38,10 @@ class Overlay(QWidget):
         WinAPI.set_transparency(hwnd, self.transparency_rgb)
         WinAPI.exclude_from_capture(hwnd)
 
-        self.showFullScreen()
+        screen = QApplication.primaryScreen()
+        self.windowHandle().setScreen(screen)
+        self.setGeometry(screen.geometry())
+        self.show()
 
         self.detections: list[dict] = []
         self.frame: np.ndarray = np.empty((1, 1, 3), dtype=np.uint8)
