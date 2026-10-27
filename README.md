@@ -30,21 +30,30 @@ The model must include the Ultralytics metadata, HaloCV reads `author`, `task`, 
 
 The default dependencies include a GPU enabled ONNX Runtime and PyTorch. The ONNX Runtime session is configured to use CUDA when available and fall back to CPU. GPU execution requires a compatible NVIDIA driver.
 
-From the repository root, sync the environment:
+## Desktop Tool
+
+### Setup
+
+Sync the environment from the repository root with `!desktop_setup.bat`, or run:
 
 ```cmd
-uv sync
-```
+if not exist ".models" mkdir ".models"
 
-To use the desktop tool, also add the `desktop` group or run `!desktop_setup.bat`:
-
-```cmd
 uv sync --group desktop
 ```
 
-## Desktop Tool
+Copy your `.onnx` models to the `.models` directory.
 
-...
+### Run
+
+You can launch the Desktop Tool with `!desktop.bat`, or run:
+
+```cmd
+uv run -m desktop
+```
+
+### Multiple Monitors
+
 
 ## Python Module
 
