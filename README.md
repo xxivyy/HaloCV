@@ -19,7 +19,11 @@
 
 ## About
 
-...
+HaloCV runs `.onnx` exported Ultralytics YOLO object detections models through ONNX Runtime and OpenCV. The core detection module handles image resizing, letterboxing, inference, clipping, non maximum suppression and mapping detection coordinates to a preferred resolution.
+
+HaloCV is implemented in a Desktop Tool, which allows loading and swapping between different `.onnx` models and see their inference results in real time drawn on your screen. This can be useful to quickly test or compare models on a visual level.
+
+The project is still in work. If there is any concerns other than what is already written in the roadmap, open an issue.
 
 ## Requirements
 
